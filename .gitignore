@@ -1,0 +1,4 @@
+# Local configuration and editor files
+.env
+.vscode/
+.DS_Store

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <meta name="theme-color" content="#07111f" />
+  <meta
+    name="description"
+    content="A browser-based console for public IP address lookup and geolocation details."
+  />
+
+  <title>IP Intelligence Console</title>
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script type="module" src="assets/js/app.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon" aria-hidden="true">◈</div>
+
+      <div>
+        <p class="eyebrow">NETWORK ANALYTICS</p>
+        <h1>IP Intelligence Console</h1>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <span class="online">Systems online</span>
+
+      <button
+        class="theme-btn"
+        id="themeButton"
+        type="button"
+        aria-pressed="false"
+      >
+        ◐ Light theme
+      </button>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="panel search-panel" aria-labelledby="searchHeading">
+      <p class="eyebrow">TARGET ACQUISITION</p>
+
+      <h2 id="searchHeading">Investigate a public network address</h2>
+
+      <p class="description">
+        Use My IP to inspect this device’s public address, or enter a public
+        IPv4/IPv6 address to search.
+      </p>
+
+      <form class="search-row" id="searchForm" novalidate>
+        <label class="search-box" for="ipInput">
+          <span aria-hidden="true">⌕</span>
+
+          <input
+            id="ipInput"
+            name="ipAddress"
+            type="text"
+            inputmode="text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Example: 8.8.8.8 or 2606:4700:4700::1111"
+            aria-describedby="searchHelp"
+          />
+        </label>
+
+        <span class="sr-only" id="searchHelp">
+          Enter a public IPv4 or IPv6 address.
+        </span>
+
+        <button class="action-btn search-btn" id="searchButton" type="submit">
+          ⌕ Search IP
+        </button>
+
+        <button class="action-btn myip-btn" id="myIpButton" type="button">
+          ◉ Scan My IP
+        </button>
+      </form>
+    </section>
+
+    <section class="dashboard" aria-label="IP lookup dashboard">
+      <section class="panel radar-panel" aria-labelledby="radarHeading">
+        <div class="title-row">
+          <div>
+            <p class="eyebrow">LIVE SIGNAL</p>
+            <h2 id="radarHeading">Network radar</h2>
+          </div>
+
+          <span class="state" id="stateLabel" aria-live="polite">
+            ● Standby
+          </span>
+        </div>
+
+        <div class="radar" id="radar" aria-hidden="true">
+          <div class="ring one"></div>
+          <div class="ring two"></div>
+          <div class="ring three"></div>
+
+          <div class="line"></div>
+          <div class="line vertical"></div>
+          <div class="sweep"></div>
+
+          <div class="target" id="target">⌁</div>
+
+          <span class="radar-caption">PUBLIC NETWORK TARGET</span>
+        </div>
+
+        <div class="target-readout">
+          <span>ACTIVE TARGET IP</span>
+
+          <strong id="activeIp">WAITING FOR TARGET</strong>
+
+          <button
+            class="copy-btn"
+            id="copyButton"
+            type="button"
+            disabled
+          >
+            ▣ Copy address
+          </button>
+        </div>
+
+        <div class="metrics">
+          <article class="metric">
+            <span>IP VERSION</span>
+            <strong class="cyan" id="ipVersion">—</strong>
+          </article>
+
+          <article class="metric">
+            <span>COUNTRY</span>
+            <strong class="green" id="countryCode">—</strong>
+          </article>
+
+          <article class="metric">
+            <span>ASN</span>
+            <strong class="yellow" id="asn">—</strong>
+          </article>
+        </div>
+      </section>
+
+      <aside class="right-stack">
+        <section class="panel info-card" aria-labelledby="profileHeading">
+          <div class="card-title">
+            <span aria-hidden="true">▣</span>
+            <h2 id="profileHeading">Network profile</h2>
+          </div>
+
+          <dl>
+            <div>
+              <dt>Provider / Organization</dt>
+              <dd id="organization">—</dd>
+            </div>
+
+            <div>
+              <dt>Hostname</dt>
+              <dd id="hostname">—</dd>
+            </div>
+
+            <div>
+              <dt>Country</dt>
+              <dd id="country">—</dd>
+            </div>
+
+            <div>
+              <dt>Region</dt>
+              <dd id="region">—</dd>
+            </div>
+
+            <div>
+              <dt>City</dt>
+              <dd id="city">—</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="panel info-card" aria-labelledby="locationHeading">
+          <div class="card-title">
+            <span aria-hidden="true">⌖</span>
+            <h2 id="locationHeading">Location signal</h2>
+          </div>
+
+          <dl>
+            <div>
+              <dt>Latitude</dt>
+              <dd id="latitude">—</dd>
+            </div>
+
+            <div>
+              <dt>Longitude</dt>
+              <dd id="longitude">—</dd>
+            </div>
+
+            <div>
+              <dt>Coordinates</dt>
+              <dd id="coordinates">—</dd>
+            </div>
+
+            <div>
+              <dt>Timezone</dt>
+              <dd id="timezone">—</dd>
+            </div>
+
+            <div>
+              <dt>Postal code</dt>
+              <dd id="postal">—</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="panel history-card" aria-labelledby="historyHeading">
+          <div class="history-head">
+            <div class="history-title">
+              <span aria-hidden="true">◷</span>
+              <h2 id="historyHeading">Recent scans</h2>
+            </div>
+
+            <button class="clear-btn" id="clearHistory" type="button">
+              Clear
+            </button>
+          </div>
+
+          <p class="empty" id="emptyHistory">
+            Completed IP investigations will appear here.
+          </p>
+
+          <ul class="history-list" id="historyList"></ul>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span id="footerStatus" aria-live="polite">SYSTEM READY</span>
+    <span id="timestamp">No completed scan yet</span>
+  </footer>
+
+  <div
+    class="loading"
+    id="loading"
+    role="status"
+    aria-live="polite"
+    aria-hidden="true"
+  >
+    <div class="spinner"></div>
+    <span>Contacting network intelligence services…</span>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="toast-icon" id="toastIcon">●</span>
+    <span id="toastMessage"></span>
+
+    <button
+      class="toast-close"
+      id="toastClose"
+      type="button"
+      aria-label="Dismiss notification"
+    >
+      ×
+    </button>
+  </div>
+</body>
+</html>
