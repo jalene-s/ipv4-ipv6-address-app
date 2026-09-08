@@ -1,25 +1,33 @@
 import requests
 
-# get the computer's current public IP information
-url = "https://ipapi.co/json/"
+# Get the computer's current public IP address
+ip_url = "https://api64.ipify.org?format=json"
 
 try:
-    response = requests.get(url, timeout=10)
-    response.raise_for_status()
-    data = response.json()
+    ip_response = requests.get(ip_url, timeout=10)
+    ip_response.raise_for_status()
+    ip = ip_response.json().get("ip")
 
-    # get information from the API response
-    ip = data.get("ip")
-    version = data.get("version")
+    # Get information about the public IP address
+    info_url = f"https://ipinfo.io/{ip}/json"
+    info_response = requests.get(info_url, timeout=10)
+    info_response.raise_for_status()
+    data = info_response.json()
+
+    # Get information from the API response
     city = data.get("city")
     region = data.get("region")
-    country = data.get("country_name")
-    country_code = data.get("country_code")
+    country = data.get("country")
     timezone = data.get("timezone")
-    asn = data.get("asn")
     organization = data.get("org")
 
-    # display the IP addressing information
+    # Determine the IP version
+    if ":" in ip:
+        version = "IPv6"
+    else:
+        version = "IPv4"
+
+    # Display the IP addressing information
     print()
     print("========================================")
     print("      IPv4/IPv6 Address Application")
@@ -28,9 +36,8 @@ try:
     print(f"IP Version:   {version}")
     print(f"City:         {city}")
     print(f"Region:       {region}")
-    print(f"Country:      {country} ({country_code})")
+    print(f"Country:      {country}")
     print(f"Timezone:     {timezone}")
-    print(f"ASN:          {asn}")
     print(f"Provider:     {organization}")
     print("========================================")
     print()
